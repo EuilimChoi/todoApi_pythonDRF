@@ -34,3 +34,8 @@ class TodoDetailAPIVIew(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class DoneTodoAPIView(APIView):
+    def get (self, request):
+        dones = Todo.objects.filter(complete=True)
+        serializer = TodoSimpleSerializer(dones, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
